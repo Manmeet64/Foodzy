@@ -1,0 +1,25 @@
+{
+    "name": "foodzy-backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon index.js"
+    },
+    "keywords": [],
+    "author": "Manmeet Singh",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@apollo/server": "^4.11.2",
+        "apollo-server-express": "^3.13.0",
+        "cors": "^2.8.5",
+        "express": "^4.21.2",
+        "firebase-admin": "^13.0.1",
+        "graphql": "^16.9.0",
+        "mongoose": "^8.8.4",
+        "neo4j-driver": "^5.27.0",
+        "neode": "^0.4.9",
+        "uuid": "^11.0.3"
+    }
+}
