@@ -27,7 +27,7 @@ const SignIn = () => {
             console.log("User logged in:", userCredential.user);
             const idToken = await userCredential.user.getIdToken();
             console.log("Firebase ID Token:", idToken); // Log the ID token
-            navigate("/dashboard"); // Redirect to the dashboard or any other page
+            navigate("/home"); // Redirect to the dashboard or any other page
         } catch (err) {
             console.error("Error signing in:", err);
             setError(err.message);

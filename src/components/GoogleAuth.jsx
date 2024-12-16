@@ -1,20 +1,21 @@
 import React from "react";
 import { googleSignIn } from "../../firebase.js";
 import styles from "../pages/Auth/SignUp/SignUp.module.css";
-
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const GoogleAuth = () => {
+    const navigate = useNavigate();
     const handleGoogleSignIn = async () => {
         try {
             const user = await googleSignIn();
             console.log("User signed in:", user);
-
+            navigate("/profileform");
             // Retrieve the Firebase ID token
             const idToken = await user.getIdToken(true);
             console.log("Firebase ID Token google:", idToken);
-            alert(`Welcome, ${user.displayName}!`);
         } catch (error) {
             console.error("Sign-In Error:", error);
-            alert("Failed to sign in with Google.");
+            toast.error("Failed to sign in with google");
         }
     };
 

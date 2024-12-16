@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ProfileForm.module.css";
+import NotificationManager from "../NotificationManager";
+import { requestFirebaseToken } from "../../../firebase.js";
+import { useNavigate } from "react-router-dom";
 
 const ProfileForm = () => {
     const [firstName, setFirstName] = useState("");
@@ -13,19 +16,53 @@ const ProfileForm = () => {
         postalCode: "",
         country: "",
     });
-    // Retrieve the token from localStorage
     const token = localStorage.getItem("token");
-
-    const [preferences, setPreferences] = useState("");
+    const [selectedCuisines, setSelectedCuisines] = useState([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [fcmToken, setFcmToken] = useState(null);
+    const [notification, setNotification] = useState(null);
+    const navigate = useNavigate();
 
-    const handleFileChange = (e) => {
-        setProfilePicture(URL.createObjectURL(e.target.files[0]));
+    const cuisineOptions = [
+        "Italian",
+        "Chinese",
+        "Mexican",
+        "Japanese",
+        "Mediterranean",
+        "American",
+        "Thai",
+    ];
+
+    useEffect(() => {
+        const fetchFcmToken = async () => {
+            try {
+                const token = await requestFirebaseToken();
+                setFcmToken(token);
+            } catch (error) {
+                console.error("Error fetching Firebase token:", error);
+            }
+        };
+        fetchFcmToken();
+    }, []);
+
+    const handleNewNotification = (notification) => {
+        setNotification(notification);
+        navigate("/home");
     };
 
-    const handlePreferenceChange = (e) => {
-        setPreferences(e.target.value);
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setProfilePicture(file);
+    };
+
+    const handleCuisineChange = (cuisine) => {
+        setSelectedCuisines((prev) => {
+            if (prev.includes(cuisine)) {
+                return prev.filter((c) => c !== cuisine);
+            }
+            return [...prev, cuisine];
+        });
     };
 
     const handleImageClick = () => {
@@ -37,7 +74,6 @@ const ProfileForm = () => {
         setLoading(true);
         setError("");
 
-        // Validation
         if (
             !firstName ||
             !lastName ||
@@ -45,9 +81,12 @@ const ProfileForm = () => {
             !address.city ||
             !address.state ||
             !address.postalCode ||
-            !address.country
+            !address.country ||
+            selectedCuisines.length === 0
         ) {
-            setError("Please fill in all required fields.");
+            setError(
+                "Please fill in all required fields and select at least one cuisine preference."
+            );
             setLoading(false);
             return;
         }
@@ -55,11 +94,12 @@ const ProfileForm = () => {
         const user = {
             name: { firstName, lastName },
             phone,
-            profilePicture: profilePicture ? profilePicture.name : "",
             address: [address],
-            preferences,
+            preferences: {
+                cuisines: selectedCuisines,
+            },
         };
-        console.log(token);
+
         try {
             const response = await fetch("http://localhost:8000/auth/create", {
                 method: "POST",
@@ -71,7 +111,49 @@ const ProfileForm = () => {
             });
 
             if (response.ok) {
-                alert("Profile updated successfully");
+                const userData = await response.json();
+
+                if (profilePicture) {
+                    const formData = new FormData();
+                    formData.append("profilePicture", profilePicture);
+
+                    const uploadResponse = await fetch(
+                        "http://localhost:8000/user/profile-picture",
+                        {
+                            method: "PUT",
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                            body: formData,
+                        }
+                    );
+
+                    if (uploadResponse.ok) {
+                        if (fcmToken) {
+                            const notificationResponse = await fetch(
+                                "http://localhost:8000/notification/send-notification",
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        token: fcmToken,
+                                        title: "Foodzy",
+                                        body: `Welcome ${firstName}`,
+                                    }),
+                                }
+                            );
+
+                            if (!notificationResponse.ok) {
+                                console.error("Failed to send notification");
+                            }
+                        }
+                    } else {
+                        setError("Failed to upload profile picture.");
+                    }
+                }
+                navigate("/home");
             } else {
                 const data = await response.json();
                 setError(data.message || "Something went wrong.");
@@ -86,6 +168,7 @@ const ProfileForm = () => {
 
     return (
         <div className={styles.profileFormWrapper}>
+            <NotificationManager onNewNotification={handleNewNotification} />
             <div className={styles.profileFormContent}>
                 <h2 className={styles.formTitle}>Complete Your Profile</h2>
                 <form onSubmit={handleSubmit} className={styles.profileForm}>
@@ -93,7 +176,7 @@ const ProfileForm = () => {
                         <div className={styles.profileImageContainer}>
                             {profilePicture ? (
                                 <img
-                                    src={profilePicture}
+                                    src={URL.createObjectURL(profilePicture)}
                                     alt="Profile"
                                     className={styles.profileImage}
                                     onClick={handleImageClick}
@@ -121,28 +204,31 @@ const ProfileForm = () => {
                         />
                     </div>
 
-                    <div className={styles.inputFieldWrapper}>
-                        <label htmlFor="firstName">First Name</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            required
-                            className={styles.inputField}
-                        />
+                    <div className={styles.formSection}>
+                        <div className={styles.inputFieldWrapper}>
+                            <label htmlFor="firstName">First Name</label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                required
+                                className={styles.inputField}
+                            />
+                        </div>
+                        <div className={styles.inputFieldWrapper}>
+                            <label htmlFor="lastName">Last Name</label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                required
+                                className={styles.inputField}
+                            />
+                        </div>
                     </div>
-                    <div className={styles.inputFieldWrapper}>
-                        <label htmlFor="lastName">Last Name</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            required
-                            className={styles.inputField}
-                        />
-                    </div>
+
                     <div className={styles.inputFieldWrapper}>
                         <label htmlFor="phone">Phone Number</label>
                         <input
@@ -230,24 +316,26 @@ const ProfileForm = () => {
                             className={styles.inputField}
                         />
                     </div>
-                    <div className={styles.inputFieldWrapper}>
-                        <label htmlFor="preferences">Preferences</label>
-                        <select
-                            id="preferences"
-                            value={preferences}
-                            onChange={handlePreferenceChange}
-                            className={styles.inputField}
-                        >
-                            <option value="">Select Preference</option>
-                            <option value="Italian">Italian</option>
-                            <option value="Indian">Indian</option>
-                            <option value="Chinese">Chinese</option>
-                            <option value="Mexican">Mexican</option>
-                            <option value="Japanese">Japanese</option>
-                            <option value="Mediterranean">Mediterranean</option>
-                            <option value="American">American</option>
-                        </select>
+
+                    <div className={styles.cuisinePreferencesSection}>
+                        <label>Cuisine Preferences</label>
+                        <div className={styles.cuisineOptions}>
+                            {cuisineOptions.map((cuisine) => (
+                                <div
+                                    key={cuisine}
+                                    className={`${styles.cuisineOption} ${
+                                        selectedCuisines.includes(cuisine)
+                                            ? styles.selected
+                                            : ""
+                                    }`}
+                                    onClick={() => handleCuisineChange(cuisine)}
+                                >
+                                    {cuisine}
+                                </div>
+                            ))}
+                        </div>
                     </div>
+
                     {error && <p className={styles.errorMessage}>{error}</p>}
                     <button
                         type="submit"

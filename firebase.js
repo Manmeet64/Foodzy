@@ -88,9 +88,32 @@ export const verifyOTP = async (confirmationResult, otp) => {
     }
 };
 
+// Request Notification Permission
+export const requestNotificationPermission = async () => {
+    try {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+            console.log("Notification permission granted.");
+            return true;
+        } else {
+            console.warn("Notification permission not granted.");
+            return false;
+        }
+    } catch (error) {
+        console.error("Error requesting notification permission:", error);
+        throw error;
+    }
+};
+
 // Request Firebase Token for Notifications
 export const requestFirebaseToken = async () => {
     try {
+        const hasPermission = await requestNotificationPermission();
+        if (!hasPermission) {
+            console.warn("Unable to get Firebase token without permission.");
+            return null;
+        }
+
         const registration = await navigator.serviceWorker.register(
             "/firebase-messaging-sw.js"
         );
@@ -108,8 +131,9 @@ export const requestFirebaseToken = async () => {
         }
 
         console.warn("No registration token available.");
+        return null;
     } catch (error) {
-        console.error("Error getting token:", error);
+        console.error("Error getting Firebase token:", error);
         throw error;
     }
 };
@@ -119,6 +143,13 @@ export const onMessageListener = () =>
     new Promise((resolve) => {
         onMessage(messaging, (payload) => {
             console.log("Foreground message received: ", payload);
+            if (Notification.permission === "granted") {
+                const { title, body, image } = payload.notification || {};
+                new Notification(title || "Notification", {
+                    body: body || "You have a new message.",
+                    icon: image || "/default-icon.png",
+                });
+            }
             resolve(payload);
         });
     });

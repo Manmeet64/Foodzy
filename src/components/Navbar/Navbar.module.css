@@ -1,0 +1,255 @@
+/* Navbar.module.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 12px 40px;
+    font-family: "Segoe UI", sans-serif;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logoContainer:hover {
+    transform: scale(1.02);
+}
+
+.logoImage {
+    height: 40px;
+    width: auto;
+}
+
+.logoText {
+    font-size: 28px;
+    font-weight: bold;
+    color: #5e8777;
+    letter-spacing: -0.5px;
+}
+
+.mobileMenuButton {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #5e8777;
+}
+
+.navLinks {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navItem {
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.navItem i {
+    margin-right: 5px;
+}
+
+.navItem:hover {
+    color: #5e8777;
+}
+
+.navItem::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #5e8777;
+    transition: width 0.3s ease;
+}
+
+.navItem:hover::after {
+    width: 100%;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    min-width: 180px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: dropdownFadeIn 0.3s ease forwards;
+}
+
+.dropdown li {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown li:hover {
+    background-color: #f8f9fa;
+    color: #5e8777;
+}
+
+.icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.searchWrapper {
+    position: relative;
+    margin-right: 10px;
+}
+
+.searchWrapper input {
+    padding: 8px 35px 8px 15px;
+    border: 2px solid #eee;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    width: 200px;
+}
+
+.searchWrapper input:focus {
+    border-color: #5e8777;
+    outline: none;
+    width: 220px;
+}
+
+.searchWrapper i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.iconWrapper {
+    width: 40px;
+    height: 40px;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.iconWrapper i {
+    color: #5e8777;
+    font-size: 16px;
+}
+
+.iconWrapper:hover {
+    background-color: #5e8777;
+    transform: translateY(-2px);
+}
+
+.iconWrapper:hover i {
+    color: #ffffff;
+}
+
+@keyframes dropdownFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 12px 20px;
+    }
+
+    .searchWrapper input {
+        width: 150px;
+    }
+
+    .navLinks {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobileMenuButton {
+        display: block;
+    }
+
+    .navLinks {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .showMobileMenu {
+        display: flex;
+    }
+
+    .searchWrapper {
+        display: none;
+    }
+
+    .icons {
+        gap: 15px;
+    }
+
+    .iconWrapper {
+        width: 35px;
+        height: 35px;
+    }
+
+    .dropdown {
+        position: static;
+        box-shadow: none;
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logoText {
+        font-size: 24px;
+    }
+
+    .logoImage {
+        height: 32px;
+    }
+
+    .navbar {
+        padding: 10px 15px;
+    }
+}

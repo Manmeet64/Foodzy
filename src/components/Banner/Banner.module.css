@@ -1,0 +1,238 @@
+/* Banner.module.css */
+.banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #f9fbef 0%, #f0f4e1 100%);
+    padding: 60px 80px;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    font-family: "Segoe UI", sans-serif;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    margin: 20px;
+}
+
+.content {
+    max-width: 50%;
+    animation: slideIn 0.8s ease-out;
+}
+
+.content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #2d3436;
+    margin-bottom: 25px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.content p {
+    font-size: 1.1rem;
+    color: #636e72;
+    margin-bottom: 35px;
+    line-height: 1.7;
+    max-width: 90%;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    max-width: 100%;
+}
+
+.locationInput {
+    padding: 16px 25px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    outline: none;
+    flex: 1;
+    transition: all 0.3s ease;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.locationInput:focus {
+    border-color: #5e8777;
+    box-shadow: 0 0 0 3px rgba(94, 135, 119, 0.1);
+}
+
+.getStartedButton {
+    padding: 16px 35px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(135deg, #5e8777 0%, #849057 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(94, 135, 119, 0.2);
+}
+
+.getStartedButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(94, 135, 119, 0.3);
+}
+
+.getStartedButton:active {
+    transform: translateY(1px);
+}
+
+.foodImages {
+    position: relative;
+    max-width: 50%;
+    animation: fadeIn 1s ease-out;
+}
+
+.mainImage {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.mainImage:hover {
+    transform: scale(1.02);
+}
+
+.smallImageTop,
+.smallImageBottom {
+    position: absolute;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: float 3s ease-in-out infinite;
+}
+
+.smallImageTop {
+    width: 120px;
+    height: 120px;
+    top: -30px;
+    right: 50px;
+    animation-delay: 0.5s;
+}
+
+.smallImageBottom {
+    width: 100px;
+    height: 100px;
+    bottom: 30px;
+    right: 0;
+    animation-delay: 1s;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .banner {
+        padding: 40px 60px;
+    }
+
+    .content h1 {
+        font-size: 3rem;
+    }
+
+    .mainImage {
+        width: 350px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 968px) {
+    .content h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner {
+        flex-direction: column;
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .content {
+        max-width: 100%;
+        margin-bottom: 40px;
+    }
+
+    .content p {
+        max-width: 100%;
+    }
+
+    .foodImages {
+        max-width: 100%;
+    }
+
+    .mainImage {
+        width: 280px;
+        height: 280px;
+    }
+
+    .inputContainer {
+        flex-direction: column;
+    }
+
+    .locationInput,
+    .getStartedButton {
+        width: 100%;
+    }
+
+    .smallImageTop,
+    .smallImageBottom {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .content h1 {
+        font-size: 2rem;
+    }
+
+    .content p {
+        font-size: 1rem;
+    }
+
+    .mainImage {
+        width: 240px;
+        height: 240px;
+    }
+}

@@ -15,16 +15,21 @@ const firebaseConfig = {
     measurementId: "G-6ZKR2FCJV6",
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// Get messaging instance
 const messaging = firebase.messaging();
 
 // Background message handler
 messaging.onBackgroundMessage((payload) => {
     console.log("Received background message: ", payload);
-    const notificationTitle = payload.notification.title;
+
+    const notificationTitle =
+        payload.notification.title || "Background Notification";
     const notificationOptions = {
-        body: payload.notification.body,
+        body: payload.notification.body || "Background message body",
+        icon: payload.notification.icon || "/default-icon.png", // Replace with your default icon path if needed
     };
 
     self.registration.showNotification(notificationTitle, notificationOptions);

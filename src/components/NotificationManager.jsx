@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { requestFirebaseToken, onMessageListener } from "../../firebase.js";
 
-const NotificationManager = () => {
+const NotificationManager = ({ onNewNotification }) => {
     const [token, setToken] = useState(null);
     const [notification, setNotification] = useState(null);
 
@@ -18,28 +18,20 @@ const NotificationManager = () => {
         fetchToken();
 
         // Listen for foreground messages
-        onMessageListener().then((payload) => {
-            setNotification(payload.notification);
-        });
-    }, []);
+        const unsubscribe = onMessageListener()
+            .then((payload) => {
+                setNotification(payload.notification);
+                if (onNewNotification) {
+                    onNewNotification(payload.notification);
+                }
+            })
+            .catch((err) => console.log("Failed to receive message", err));
 
-    return (
-        <div>
-            <h2>Firebase Notifications</h2>
-            {token && <p>FCM Token: {token}</p>}
-            {notification && (
-                <div>
-                    <h3>Notification</h3>
-                    <p>
-                        <strong>Title:</strong> {notification.title}
-                    </p>
-                    <p>
-                        <strong>Body:</strong> {notification.body}
-                    </p>
-                </div>
-            )}
-        </div>
-    );
+        // No need for cleanup since Firebase handles it internally
+        // So we can simply return nothing here or leave the return empty
+    }, [onNewNotification]); // Effect runs once when the component mounts
+
+    return null; // This component does not render anything
 };
 
 export default NotificationManager;
