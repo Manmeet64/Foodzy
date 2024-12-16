@@ -1,3 +1,4 @@
+import firebaseAdmin from "../firebase.js";
 export default async function sendNotification(req, res) {
     const { token, title, body } = req.body;
 
@@ -9,7 +10,7 @@ export default async function sendNotification(req, res) {
             token,
         };
         console.log("Sending message:", message);
-        const response = await admin.messaging().send(message);
+        const response = await firebaseAdmin.messaging().send(message);
         console.log("Message sent successfully:", response);
         res.status(200).send({ success: true, response });
     } catch (error) {

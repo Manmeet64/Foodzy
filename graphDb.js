@@ -5,7 +5,7 @@ const driver = neo4j.driver(
     "bolt://localhost:7687", // e.g., "bolt://localhost:7687"
     neo4j.auth.basic("neo4j", "123456789")
 );
-
+console.log("Neo4j connnected");
 /**
  * Create a new session with the specified access mode
  * @param {"READ" | "WRITE"} accessMode - The access mode for the session

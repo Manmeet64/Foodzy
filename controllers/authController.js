@@ -4,6 +4,7 @@ export async function Create(req, res) {
     let user = req.body;
     const firebaseId = req.firebaseId;
     const email = req.email;
+    console.log(req.body);
 
     // Add firebaseId to the user object
     user.firebaseId = firebaseId;
@@ -34,5 +35,29 @@ export async function Find(req, res) {
         });
     } catch (err) {
         res.status(500).send({ message: "User not found" });
+    }
+}
+
+export async function editUser(req, res) {
+    const firebaseId = req.firebaseId;
+    const updatedUser = req.body;
+
+    try {
+        const user = await userModel.findOneAndUpdate(
+            { firebaseId },
+            { $set: updatedUser },
+            { new: true } // Returns the updated document
+        );
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+        res.status(200).send({
+            message: "User updated successfully",
+            data: user,
+        });
+    } catch (err) {
+        res.status(500).send({
+            message: "An error occurred while updating the user",
+        });
     }
 }

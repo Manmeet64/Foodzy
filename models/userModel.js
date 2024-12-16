@@ -21,11 +21,6 @@ const UserSchema = mongoose.Schema(
         preferences: {
             cuisines: [String], // Reference to Cuisines model
         },
-        role: {
-            type: String,
-            enum: ["user", "admin", "delivery-agent"], // Defines the possible roles
-            default: "user", // Default role is user
-        },
     },
     {
         timestamps: true,
