@@ -34,10 +34,6 @@ const menuSchema = mongoose.Schema({
                 type: String, // E.g., "Indian", "Italian"
                 required: true,
             },
-            isPopular: {
-                type: Boolean,
-                default: false,
-            },
             ratings: {
                 average: {
                     type: Number,

@@ -9,11 +9,13 @@ import { createSession } from "../graphDb.js";
 export const addRestaurant = async (req, res) => {
     try {
         // Generate a unique restaurantId
+        const firebaseId = req.firebaseId;
         const restaurantId = uuidv4();
         const restaurantData = req.body;
 
         // Add restaurantId to the request body
         restaurantData.restaurantId = restaurantId;
+        restaurantData.adminId = firebaseId;
 
         // Extract city from address for Neo4j location property
         const { city } = restaurantData.address;
@@ -85,7 +87,7 @@ export const getAllRestaurants = async (req, res) => {
 export const getRestaurantById = async (req, res) => {
     try {
         const { restaurantId } = req.params;
-        const restaurant = await restaurantModel.findOne({ restaurantId });
+        const restaurant = await restaurantModel.findById(restaurantId);
 
         if (!restaurant) {
             return res.status(404).json({

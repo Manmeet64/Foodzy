@@ -12,6 +12,7 @@ import eventRouter from "./routes/eventRouter.js";
 import notificationRouter from "./routes/notificationRouter.js";
 import reviewRouter from "./routes/reviewRouter.js";
 import userRouter from "./routes/userRouter.js";
+import orderRouter from "./routes/orderRouter.js";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4"; // Express middleware for Apollo Server
 import typeDefs from "./graphql/typedefs/index.js";
@@ -41,13 +42,14 @@ app.use("/notification", notificationRouter);
 // Other routes and middlewares
 app.use("/delivery", deliveryRouter);
 app.use("/event", eventRouter);
-app.use("/admin", restaurantRouter);
 app.use(authMiddleware); // Uncomment this line to add the authentication middleware globally
 app.use("/auth", authRouter);
+app.use("/admin", restaurantRouter);
 app.use("/user", userRouter);
 app.use("/menus", menuRouter);
 app.use("/cuisines", cuisineRouter);
 app.use("/reviews", reviewRouter);
+app.use("/orders", orderRouter);
 
 // Port listening, started as a service
 app.listen(8000, () => {

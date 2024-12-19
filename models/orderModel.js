@@ -11,11 +11,6 @@ const OrderSchema = new mongoose.Schema(
         },
         items: [
             {
-                menuId: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "menus",
-                    required: true,
-                },
                 dishId: {
                     type: String,
                     required: true,
@@ -27,11 +22,7 @@ const OrderSchema = new mongoose.Schema(
                 quantity: { type: Number, required: true },
                 price: { type: Number, required: true },
                 cuisine: { type: String, required: true }, // Cuisine type (from Menu schema)
-                isPopular: { type: Boolean, default: false },
-                dishRatings: {
-                    average: { type: Number, default: 0 },
-                    count: { type: Number, default: 0 },
-                },
+                imageUrl: { type: String, required: true },
             },
         ],
         totalAmount: { type: Number, required: true },
@@ -40,10 +31,15 @@ const OrderSchema = new mongoose.Schema(
         status: {
             type: String,
             required: true,
-            enum: ["Pending", "In Progress", "Completed", "Cancelled"],
+            enum: [
+                "pending",
+                "confirmed",
+                "preparing",
+                "completed",
+                "cancelled",
+            ],
             default: "Pending",
         },
-        cancelled: { type: Boolean, default: false }, // Field for cancelled orders
     },
     {
         timestamps: true, // Automatically adds createdAt and updatedAt

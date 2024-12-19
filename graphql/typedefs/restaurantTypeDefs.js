@@ -3,6 +3,7 @@ import { gql } from "apollo-server-express";
 const restaurantTypeDefs = gql`
     type Address {
         street: String
+        locality: String
         city: String
         state: String
         postalCode: String
@@ -26,20 +27,27 @@ const restaurantTypeDefs = gql`
         parking: String
     }
 
+    type Photo {
+        photoId: String
+        url: String
+    }
+
     type Restaurant {
+        _id: ID!
         restaurantId: ID!
         name: String!
         description: String!
         address: Address!
         contact: Contact!
-        hours: [Hours]
+        hours: Hours
         estimatedDeliveryTime: String
         ratings: Ratings
         features: Features
         status: String
-        cuisines: [Cuisine]
+        cuisines: Cuisine
         menu: [Dish]
         reviews: [Review]
+        photos: [Photo]
     }
 
     type Hours {
@@ -51,7 +59,7 @@ const restaurantTypeDefs = gql`
     type Query {
         getRestaurants(
             name: String
-            cuisine: String
+            cuisine: [String]
             location: String
             minRating: Float
             status: String

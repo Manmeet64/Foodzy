@@ -104,6 +104,46 @@ export const getAllDeliveryAgents = async (req, res) => {
         });
     }
 };
+//MOST IMPORTANT USAGE
+export const getClosestDeliveryAgent = async (req, res) => {
+    try {
+        const { restaurantId } = req.params;
+
+        const session = createSession("READ");
+        try {
+            const result = await session.run(
+                `MATCH (r:Restaurant {id: $restaurantId})-[:DELIVERS]->(d:DeliveryAgent)
+                 RETURN d
+                 ORDER BY r.distance
+                 LIMIT 1`,
+                { restaurantId }
+            );
+
+            if (result.records.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: "No delivery agents found for this restaurant",
+                });
+            }
+
+            const agent = result.records[0].get("d").properties;
+
+            res.status(200).json({
+                success: true,
+                agent,
+            });
+        } finally {
+            session.close();
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Error fetching delivery agent",
+            error: error.message,
+        });
+    }
+};
 
 // Get a DeliveryAgent by ID
 export const getDeliveryAgentById = async (req, res) => {

@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 // Cuisine Schema
 const cuisineSchema = mongoose.Schema({
@@ -7,20 +7,7 @@ const cuisineSchema = mongoose.Schema({
         ref: "restaurants",
         required: true,
     },
-    name: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-    },
-    subcategories: {
-        type: [String],
-        default: [],
-    },
-    imageUrl: {
-        type: String,
-    },
+    cuisines: [String],
 });
 
 const cuisineModel = mongoose.model("cuisines", cuisineSchema);

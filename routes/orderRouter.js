@@ -1,20 +1,28 @@
 import express from "express";
 import {
-    createOrder,
+    createOrUpdateOrder,
     getOrdersByUser,
     getOrderById,
     updateOrderStatus,
     cancelOrder,
+    deleteOrUpdateOrder,
+    getPendingOrders,
+    getPendingOrdersWithRestaurantNames,
+    getPendingOrderByRestaurant,
+    createCheckoutSession,
+    confirmOrder,
+    changeStatusOrder,
 } from "../controllers/orderController.js"; // Importing controller functions
 
 const router = express.Router();
 
 // Route for creating an order
-router.post("/", createOrder);
-
+router.post("/create", createOrUpdateOrder);
+router.post("/delete", deleteOrUpdateOrder);
 // Route for getting orders by user
 router.get("/user/:userId", getOrdersByUser);
-
+router.get("/pending", getPendingOrdersWithRestaurantNames);
+router.get("/pending/:restaurantId", getPendingOrderByRestaurant);
 // Route for getting a specific order by orderId
 router.get("/:orderId", getOrderById);
 
@@ -23,5 +31,7 @@ router.put("/:orderId/status", updateOrderStatus);
 
 // Route for cancelling an order
 router.put("/:orderId/cancel", cancelOrder);
-
+router.post("/checkout/:orderId", createCheckoutSession);
+router.get("/confirm/:orderId", confirmOrder);
+router.post("/change/:orderId", changeStatusOrder);
 export default router;

@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const restaurantSchema = mongoose.Schema({
+    adminId: {
+        type: String,
+        required: true,
+    },
     restaurantId: {
         type: String,
         required: true,
@@ -16,6 +20,7 @@ const restaurantSchema = mongoose.Schema({
     },
     address: {
         street: String,
+        locality: String,
         city: String,
         state: String,
         postalCode: String,
@@ -45,20 +50,8 @@ const restaurantSchema = mongoose.Schema({
         {
             photoId: String,
             url: String,
-            description: String,
         },
     ],
-    features: {
-        delivery: Boolean,
-        takeout: Boolean,
-        reservations: Boolean,
-        parking: String,
-    },
-    status: {
-        type: String,
-        enum: ["Open", "Closed", "Temporarily Closed"],
-        default: "Open",
-    },
 });
 
 const restaurantModel = mongoose.model("Restaurant", restaurantSchema);
