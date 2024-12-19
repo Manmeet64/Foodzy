@@ -9,7 +9,7 @@ const GoogleAuth = () => {
         try {
             const user = await googleSignIn();
             console.log("User signed in:", user);
-            navigate("/profileform");
+            navigate("/home");
             // Retrieve the Firebase ID token
             const idToken = await user.getIdToken(true);
             console.log("Firebase ID Token google:", idToken);

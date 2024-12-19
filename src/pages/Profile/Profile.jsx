@@ -146,7 +146,8 @@ function Profile() {
                 Loading profile...
             </div>
         );
-
+    console.log(user);
+    console.log(user.profilePicture);
     return (
         <div className={styles.container}>
             <div className={styles.card}>

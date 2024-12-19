@@ -40,54 +40,6 @@ export const googleSignIn = async () => {
     }
 };
 
-// Setup Recaptcha for Phone Authentication
-export const setupRecaptcha = (containerId) => {
-    // Check if recaptcha is already initialized
-    if (!window.recaptchaVerifier) {
-        window.recaptchaVerifier = new RecaptchaVerifier(
-            containerId,
-            {
-                size: "invisible", // Invisible Recaptcha
-                callback: (response) => {
-                    console.log("Recaptcha verified successfully:", response);
-                },
-            },
-            auth
-        );
-    } else {
-        console.log("Recaptcha already initialized.");
-    }
-};
-
-// Phone Sign-In Function
-export const phoneSignIn = async (phoneNumber) => {
-    try {
-        const appVerifier = window.recaptchaVerifier;
-        const confirmationResult = await signInWithPhoneNumber(
-            auth,
-            phoneNumber,
-            appVerifier
-        );
-        console.log("OTP sent to:", phoneNumber);
-        return confirmationResult; // Return to verify OTP later
-    } catch (error) {
-        console.error("Phone Sign-In Error:", error);
-        throw error;
-    }
-};
-
-// Verify OTP Function
-export const verifyOTP = async (confirmationResult, otp) => {
-    try {
-        const userCredential = await confirmationResult.confirm(otp);
-        console.log("Phone Sign-In Successful:", userCredential.user);
-        return userCredential.user; // Return user info
-    } catch (error) {
-        console.error("OTP Verification Error:", error);
-        throw error;
-    }
-};
-
 // Request Notification Permission
 export const requestNotificationPermission = async () => {
     try {

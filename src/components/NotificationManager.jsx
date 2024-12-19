@@ -6,20 +6,22 @@ const NotificationManager = ({ onNewNotification }) => {
     const [notification, setNotification] = useState(null);
 
     useEffect(() => {
-        const fetchToken = async () => {
-            try {
-                const token = await requestFirebaseToken();
-                setToken(token);
-            } catch (error) {
-                console.error("Error fetching Firebase token:", error);
-            }
-        };
+        // const fetchToken = async () => {
+        //     try {
+        //         const token = await requestFirebaseToken();
+        //         setToken(token);
+        //     } catch (error) {
+        //         console.error("Error fetching Firebase token:", error);
+        //     }
+        // };
 
-        fetchToken();
+        // fetchToken();
 
         // Listen for foreground messages
+        console.log("hello outiside");
         const unsubscribe = onMessageListener()
             .then((payload) => {
+                console.log("hello");
                 setNotification(payload.notification);
                 if (onNewNotification) {
                     onNewNotification(payload.notification);

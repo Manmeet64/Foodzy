@@ -1,0 +1,76 @@
+.container {
+    padding: 20px;
+    font-family: "Arial", sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cartRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.cartRow:hover {
+    background-color: #f1f1f1;
+}
+
+.restaurantInfo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.restaurantImage {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.restaurantName {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.viewCartButton {
+    background-color: #5e8777;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.viewCartButton:hover {
+    background-color: #4a725c;
+}
+
+.emptyCart {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+    padding: 20px;
+}

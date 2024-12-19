@@ -69,7 +69,7 @@ const Navbar = () => {
                     <i className="fas fa-robot"></i> Aura AI
                 </li>
                 <li
-                    onClick={() => navigate("/services")}
+                    onClick={() => navigate("/search")}
                     className={styles.navItem}
                 >
                     <i className="fas fa-store"></i> Restaurants
@@ -89,7 +89,12 @@ const Navbar = () => {
                 <div className={styles.iconWrapper}>
                     <i className="fas fa-heart"></i>
                 </div>
-                <div className={styles.iconWrapper}>
+                <div
+                    className={styles.iconWrapper}
+                    onClick={() => {
+                        navigate("/cart");
+                    }}
+                >
                     <i className="fas fa-shopping-cart"></i>
                 </div>
                 <div
