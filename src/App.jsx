@@ -14,42 +14,48 @@ import RestaurantDetail from "./pages/RestaurantDetails/RestaurantDetail";
 import Carts from "./pages/Carts/Carts";
 import Cart from "./pages/Cart/Cart";
 import TrackOrder from "./pages/TrackOrder/TrackOrder";
-import Map from "./components/Map/Map";
+import Aura from "./pages/Aura/Aura";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
+
 const App = () => {
     return (
-        <Router>
-            <div className="container">
-                <ToastContainer />
-                <Routes>
-                    {/* Define the routes */}
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/profileform" element={<ProfileForm />} />
-                    {/*This is for testing notification endpoint and getting fcm notifications to send
-                    notifications, remember these tokens are refresed every hour*/}
-                    <Route
-                        path="/notification"
-                        element={<NotificationManager />}
-                    />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/admin" element={<Admin />} />
-                    <Route path="/search" element={<Search />} />
-                    <Route path="/cart" element={<Carts />} />
-                    <Route path="/cart/:restaurantId" element={<Cart />} />
-                    <Route
-                        path="/search/:restaurantId"
-                        element={<RestaurantDetail />}
-                    />
-                    <Route
-                        path="/track/:restaurantId/:orderId"
-                        element={<TrackOrder />}
-                    />
-                    {/* Redirect to SignIn if no matching route is found */}
-                    <Route path="/" element={<SignIn />} />
-                </Routes>
-            </div>
-        </Router>
+        <ThemeProvider theme={theme}>
+            <Router>
+                <div className="container">
+                    <ToastContainer />
+                    <Routes>
+                        {/* Define the routes */}
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="/signin" element={<SignIn />} />
+                        <Route path="/profileform" element={<ProfileForm />} />
+                        {/*This is for testing notification endpoint and getting fcm notifications to send
+                        notifications, remember these tokens are refresed every hour*/}
+                        <Route
+                            path="/notification"
+                            element={<NotificationManager />}
+                        />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/admin" element={<Admin />} />
+                        <Route path="/search" element={<Search />} />
+                        <Route path="/cart" element={<Carts />} />
+                        <Route path="/cart/:restaurantId" element={<Cart />} />
+                        <Route
+                            path="/search/:restaurantId"
+                            element={<RestaurantDetail />}
+                        />
+                        <Route path="/aura" element={<Aura />} />
+                        <Route
+                            path="/track/:restaurantId/:orderId"
+                            element={<TrackOrder />}
+                        />
+                        {/* Redirect to SignIn if no matching route is found */}
+                        <Route path="/" element={<SignIn />} />
+                    </Routes>
+                </div>
+            </Router>
+        </ThemeProvider>
     );
 };
 

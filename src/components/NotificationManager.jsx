@@ -6,34 +6,53 @@ const NotificationManager = ({ onNewNotification }) => {
     const [notification, setNotification] = useState(null);
 
     useEffect(() => {
-        // const fetchToken = async () => {
-        //     try {
-        //         const token = await requestFirebaseToken();
-        //         setToken(token);
-        //     } catch (error) {
-        //         console.error("Error fetching Firebase token:", error);
-        //     }
-        // };
+        // Fetch the FCM Token
+        const fetchToken = async () => {
+            try {
+                const token = await requestFirebaseToken();
+                console.log("FCM Token fetched successfully:", token);
+                setToken(token);
+            } catch (error) {
+                console.error("Error fetching Firebase token:", error);
+            }
+        };
 
-        // fetchToken();
+        fetchToken();
 
         // Listen for foreground messages
-        console.log("hello outiside");
-        const unsubscribe = onMessageListener()
-            .then((payload) => {
-                console.log("hello");
-                setNotification(payload.notification);
-                if (onNewNotification) {
-                    onNewNotification(payload.notification);
-                }
-            })
-            .catch((err) => console.log("Failed to receive message", err));
+        const initializeNotificationListener = () => {
+            onMessageListener()
+                .then((payload) => {
+                    console.log("THIS IS ON MESSAGE");
+                    console.log("Notification received:", payload);
+                    setNotification(payload.notification);
 
-        // No need for cleanup since Firebase handles it internally
-        // So we can simply return nothing here or leave the return empty
-    }, [onNewNotification]); // Effect runs once when the component mounts
+                    // Pass the notification data to the parent component if provided
+                    if (onNewNotification) {
+                        console.log("THIS IS ON NEW NOTIFICATION PASSING");
+                        onNewNotification(payload.notification);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Failed to receive message:", error);
+                });
+        };
 
-    return null; // This component does not render anything
+        initializeNotificationListener();
+    }, [onNewNotification]);
+
+    // For debugging purposes, log any notifications received
+    useEffect(() => {
+        if (notification) {
+            console.log("Current notification:", notification);
+        }
+    }, [notification]);
+
+    return (
+        <div style={{ display: "none" }}>
+            {/* This component is invisible and does not render anything */}
+        </div>
+    );
 };
 
 export default NotificationManager;

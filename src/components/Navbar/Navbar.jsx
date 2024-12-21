@@ -11,7 +11,10 @@ const Navbar = () => {
 
     return (
         <nav className={styles.navbar}>
-            <div className={styles.logoContainer} onClick={() => navigate("/")}>
+            <div
+                className={styles.logoContainer}
+                onClick={() => navigate("/home")}
+            >
                 <img
                     src={logo}
                     alt="Foodzy Logo"
@@ -36,22 +39,23 @@ const Navbar = () => {
                 }`}
             >
                 <li
-                    onClick={() => navigate("/dashboard")}
                     className={styles.navItem}
                     onMouseEnter={() => setShowDropdown(true)}
                     onMouseLeave={() => setShowDropdown(false)}
                 >
                     <span>
-                        <i className="fas fa-th-large"></i> Dashboard{" "}
+                        <i className="fas fa-th-large"></i> Quick Access{" "}
                         <i className="fas fa-chevron-down"></i>
                     </span>
                     {showDropdown && (
                         <ul className={styles.dropdown}>
                             <li onClick={() => navigate("/admin")}>
                                 <i className="fas fa-user-shield"></i> Admin
+                                Portal
                             </li>
                             <li onClick={() => navigate("/delivery")}>
                                 <i className="fas fa-truck"></i> Delivery
+                                Partner
                             </li>
                         </ul>
                     )}
@@ -74,26 +78,40 @@ const Navbar = () => {
                 >
                     <i className="fas fa-store"></i> Restaurants
                 </li>
-                <li
-                    onClick={() => navigate("/about")}
-                    className={styles.navItem}
-                >
-                    <i className="fas fa-info-circle"></i> About
+                <li className={styles.mobileIcons}>
+                    <div
+                        onClick={() => navigate("/search")}
+                        className={styles.mobileIcon}
+                    >
+                        <i className="fas fa-search"></i>
+                        <span>Search</span>
+                    </div>
+                    <div
+                        onClick={() => navigate("/cart")}
+                        className={styles.mobileIcon}
+                    >
+                        <i className="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                    </div>
+                    <div
+                        onClick={() => navigate("/profile")}
+                        className={styles.mobileIcon}
+                    >
+                        <i className="fas fa-user"></i>
+                        <span>Profile</span>
+                    </div>
                 </li>
             </ul>
             <div className={styles.icons}>
-                <div className={styles.searchWrapper}>
-                    <input type="text" placeholder="Search..." />
+                <div
+                    className={styles.iconWrapper}
+                    onClick={() => navigate("/search")}
+                >
                     <i className="fas fa-search"></i>
-                </div>
-                <div className={styles.iconWrapper}>
-                    <i className="fas fa-heart"></i>
                 </div>
                 <div
                     className={styles.iconWrapper}
-                    onClick={() => {
-                        navigate("/cart");
-                    }}
+                    onClick={() => navigate("/cart")}
                 >
                     <i className="fas fa-shopping-cart"></i>
                 </div>

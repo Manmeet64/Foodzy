@@ -69,6 +69,7 @@ const Cart = () => {
                         items: order.items, // Include the items in the body
                         deliveryCharge, // Pass calculated delivery charge
                         restaurantId, // Pass restaurant ID
+                        finalTotal,
                     }),
                 }
             );

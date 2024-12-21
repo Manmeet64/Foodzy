@@ -66,11 +66,13 @@ export const requestFirebaseToken = async () => {
             return null;
         }
 
+        // Register service worker for notifications
         const registration = await navigator.serviceWorker.register(
             "/firebase-messaging-sw.js"
         );
-        console.log("Service Worker registered:", registration);
+        console.log("Service Worker registered successfully:", registration);
 
+        // Get the FCM token
         const token = await getToken(messaging, {
             vapidKey:
                 "BGDeV5WaGnIA_hzcp9kd3WVW3SxGKg_qPkuADYhv1fElaBhwolySO3haP0p2bvFJ3XjJ_JWEWSm3MmP-aqWeECY",
@@ -78,7 +80,7 @@ export const requestFirebaseToken = async () => {
         });
 
         if (token) {
-            console.log("Token obtained:", token);
+            console.log("FCM Token obtained:", token);
             return token;
         }
 
@@ -92,17 +94,22 @@ export const requestFirebaseToken = async () => {
 
 // Listen for foreground messages
 export const onMessageListener = () =>
-    new Promise((resolve) => {
+    new Promise((resolve, reject) => {
         onMessage(messaging, (payload) => {
-            console.log("Foreground message received: ", payload);
-            if (Notification.permission === "granted") {
-                const { title, body, image } = payload.notification || {};
-                new Notification(title || "Notification", {
-                    body: body || "You have a new message.",
-                    icon: image || "/default-icon.png",
-                });
+            try {
+                console.log("Foreground message received:", payload);
+                if (Notification.permission === "granted") {
+                    const { title, body, image } = payload.notification || {};
+                    new Notification(title || "Notification", {
+                        body: body || "You have a new message.",
+                        icon: image || "/default-icon.png",
+                    });
+                }
+                resolve(payload); // Successfully resolve the payload
+            } catch (error) {
+                console.error("Error handling foreground message:", error);
+                reject(error); // Reject the promise in case of an error
             }
-            resolve(payload);
         });
     });
 

@@ -1,219 +1,478 @@
 /* Profile.module.css */
-.container {
+.profileContainer {
+    min-height: calc(100vh - 64px);
+    background-color: #f9fbef;
+    padding: 32px;
+}
+
+.sidebar {
+    height: 100vh;
+    background-color: white;
+    border-right: 1px solid rgba(94, 135, 119, 0.1);
+    position: sticky;
+    top: 0;
+    padding: 24px 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebarContent {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 20px;
+    flex-direction: column;
+    height: 100%;
 }
 
-.card {
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-    padding: 30px;
+.logoSection {
+    padding: 0 24px 24px;
+    border-bottom: 1px solid rgba(94, 135, 119, 0.1);
+    margin-bottom: 24px;
+}
+
+.brandName {
+    color: #5e8777;
+    font-weight: 700 !important;
+    font-size: 24px !important;
+    background: linear-gradient(135deg, #2d3436 0%, #5e8777 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.menuList {
+    padding: 0 12px !important;
+}
+
+.menuItem {
+    margin: 8px 0 !important;
+    padding: 12px 16px !important;
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+.menuIcon {
+    color: #5e8777 !important;
+    min-width: 40px !important;
+}
+
+.activeMenuItem {
+    background-color: rgba(94, 135, 119, 0.1) !important;
+    font-weight: 600 !important;
+}
+
+.mainContent {
+    padding: 32px !important;
+    max-width: 1200px;
+}
+
+.mobileMenuButton {
+    position: fixed !important;
+    top: 16px;
+    left: 16px;
+    z-index: 1000;
+    background-color: white !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mobileDrawer .MuiDrawer-paper {
+    width: 280px;
+}
+
+.drawerContent {
+    padding: 24px 0;
+}
+
+.profileCard {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.profileContent {
+    padding: 40px;
+}
+
+.profileHeader {
     text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.avatarSection {
-    margin-bottom: 30px;
-}
-
-.avatarWrapper {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto;
+    margin-bottom: 40px;
 }
 
 .avatar {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    width: 120px !important;
+    height: 120px !important;
+    margin: 0 auto 20px;
+    border: 3px solid #5e8777;
 }
 
-.avatar:hover {
-    transform: scale(1.05);
+.userName {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2d3436;
+    margin: 0;
 }
 
 .infoSection {
-    margin-bottom: 30px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.infoSection h2 {
-    margin: 0 0 20px;
-    font-size: 28px;
-    color: #2c3e50;
-    font-weight: 600;
+.infoCard {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 24px;
 }
 
 .infoItem {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.icon {
-    color: #3498db;
+.infoItem:last-child {
+    border-bottom: none;
 }
 
-.email,
-.phone {
-    font-size: 16px;
-    color: #666;
-    margin: 0;
-}
-
-.editSection {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-}
-
-.editSection h3 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-.formGroup {
-    margin-bottom: 20px;
-}
-
-.formGroup label {
-    display: block;
-    font-size: 14px;
-    color: #34495e;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.formGroup input {
-    width: 100%;
-    padding: 12px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.formGroup input:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-}
-
-.disabledInput {
-    background-color: #f5f5f5;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.emailNote {
-    color: #666;
-    font-size: 12px;
-    font-style: italic;
+.infoIcon {
+    color: #5e8777;
+    margin-right: 16px;
     margin-top: 4px;
-    display: block;
 }
 
-.addressCard {
+.infoContent {
+    flex: 1;
+}
+
+.infoLabel {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.infoValue {
+    display: block;
+    color: #2d3436;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.editButton {
+    display: block !important;
+    margin: 32px auto 0 !important;
+    background-color: #5e8777 !important;
+    color: white !important;
+    padding: 10px 24px !important;
+    border-radius: 8px !important;
+    text-transform: none !important;
+    font-size: 15px !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.editButton:hover {
+    background-color: #4a7056 !important;
+}
+
+@media (max-width: 600px) {
+    .profileContent {
+        padding: 24px;
+    }
+
+    .userName {
+        font-size: 24px;
+    }
+
+    .infoCard {
+        padding: 16px;
+    }
+
+    .infoItem {
+        padding: 12px 0;
+    }
+
+    .infoValue {
+        font-size: 15px;
+    }
+}
+
+.editForm {
     background: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.editFormHeader {
+    background: linear-gradient(135deg, #5e8777 0%, #2d3436 100%);
+    padding: 24px 32px;
+    color: white;
+}
+
+.editTitle {
+    color: white !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+}
+
+.formFields {
+    padding: 32px;
+}
+
+.formSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.textField {
+    margin-bottom: 20px !important;
+}
+
+.textField input {
+    padding: 14px !important;
+}
+
+.sectionTitle {
+    color: #2d3436 !important;
+    font-weight: 600 !important;
+    margin: 32px 0 16px !important;
+    font-size: 1.2rem !important;
+}
+
+.addressSection {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.addressTitle {
+    color: #5e8777 !important;
+    font-weight: 500 !important;
+    margin-bottom: 16px !important;
 }
 
 .buttonGroup {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
+    gap: 16px;
+    margin-top: 32px;
+    justify-content: flex-end;
 }
 
-.editBtn,
-.saveBtn,
-.cancelBtn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
+.saveButton {
+    background-color: #5e8777 !important;
+    color: white !important;
+    padding: 10px 32px !important;
+    font-size: 16px !important;
+    text-transform: none !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(94, 135, 119, 0.2) !important;
+}
+
+.saveButton:hover {
+    background-color: #4a6a5c !important;
+}
+
+.cancelButton {
+    color: #e74c3c !important;
+    border-color: #e74c3c !important;
+    padding: 10px 32px !important;
+    font-size: 16px !important;
+    text-transform: none !important;
+    border-radius: 8px !important;
+}
+
+.cancelButton:hover {
+    background-color: rgba(231, 76, 60, 0.08) !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .profileContainer {
+        padding: 16px;
+    }
+
+    .formSection {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .editFormHeader {
+        padding: 20px 24px;
+    }
+
+    .formFields {
+        padding: 24px;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+    }
+
+    .saveButton,
+    .cancelButton {
+        width: 100%;
+    }
+}
+
+/* Add smooth transitions */
+.menuItem,
+.menuIcon,
+.brandName {
     transition: all 0.3s ease;
 }
 
-.editBtn {
-    background-color: #3498db;
-    color: white;
+/* Hover effects */
+.menuItem:hover {
+    background-color: rgba(94, 135, 119, 0.08) !important;
+    transform: translateX(4px);
 }
 
-.editBtn:hover {
-    background-color: #2980b9;
+/* Active state animations */
+.activeMenuItem {
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.ordersContainer {
+    padding: 20px 0;
+}
+
+.ordersTitle {
+    margin-bottom: 24px !important;
+    color: #2d3436;
+    font-weight: 600 !important;
+}
+
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.orderCard {
+    padding: 24px;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.orderCard:hover {
     transform: translateY(-2px);
 }
 
-.saveBtn {
-    background-color: #2ecc71;
-    color: white;
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.saveBtn:hover {
-    background-color: #27ae60;
-    transform: translateY(-2px);
+.orderInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.cancelBtn {
-    background-color: #e74c3c;
-    color: white;
+.orderId {
+    color: #2d3436;
+    font-weight: 600 !important;
 }
 
-.cancelBtn:hover {
-    background-color: #c0392b;
-    transform: translateY(-2px);
+.orderStatus {
+    color: #5e8777;
+    font-weight: 500 !important;
+    text-transform: capitalize;
 }
 
-.loading {
-    text-align: center;
-    padding: 40px;
+.orderTotal {
+    color: #5e8777;
+    font-weight: 600 !important;
+}
+
+.orderItems {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.orderItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.itemInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.itemImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.itemDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.itemName {
+    font-weight: 500 !important;
+    color: #2d3436;
+}
+
+.itemCuisine {
+    color: #666;
+    font-size: 0.9rem !important;
+}
+
+.itemPricing {
+    text-align: right;
+}
+
+.itemTotal {
+    color: #5e8777;
+    font-weight: 500 !important;
+    margin-top: 4px !important;
+}
+
+.orderFooter {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    color: #666;
 }
 
 .spinner {
     width: 40px;
     height: 40px;
-    margin: 0 auto 20px;
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
+    border-top: 4px solid #5e8777;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-}
-
-.noUser {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    color: #666;
-    font-size: 18px;
+    margin: 0 auto 16px;
 }
 
 @keyframes spin {
@@ -225,19 +484,37 @@
     }
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-    .card {
-        padding: 20px;
-    }
-
-    .buttonGroup {
+@media (max-width: 768px) {
+    .orderItem {
         flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
     }
 
-    .editBtn,
-    .saveBtn,
-    .cancelBtn {
+    .itemPricing {
+        text-align: left;
         width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
+
+    .itemImage {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.noOrders {
+    text-align: center;
+    padding: 48px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    color: #666;
+}
+
+.loading {
+    text-align: center;
+    padding: 48px;
+    color: #666;
 }

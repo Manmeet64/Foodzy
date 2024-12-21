@@ -30,7 +30,8 @@ const TrackOrder = () => {
 
     const handleNewNotification = (notification) => {
         console.log("Notification received:", notification);
-        console.log("Notification displayed successfully.");
+        console.log("Notification displayed successfully. in the frontend");
+        console.log("THIS FUNCTION IS NOT RUNNING");
     };
 
     // Fetch FCM Token
@@ -286,9 +287,9 @@ const TrackOrder = () => {
                 try {
                     // Send status update request
                     await fetch(
-                        `http://localhost:8000/orders/change/${orderId}`,
+                        `http://localhost:8000/orders/${orderId}/status`,
                         {
-                            method: "POST",
+                            method: "PUT",
                             headers: {
                                 "Content-Type": "application/json",
                                 Authorization: `Bearer ${idToken}`,

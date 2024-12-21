@@ -1,121 +1,174 @@
 .container {
-    background-color: #f9fbef;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
 }
 
+/* Hero Section */
 .header {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
+    position: relative;
+    height: 40vh;
+    width: 92%;
+    margin: 24px auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
 }
 
 .restaurantImage {
     width: 100%;
-    height: auto;
-    max-height: 400px;
+    height: 100%;
     object-fit: cover;
 }
 
-.restaurantName {
-    font-size: 2.5rem;
-    color: #5e8777;
-    margin-top: 10px;
+.restaurantInfo {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin: -60px 6% 0;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
 }
 
-.address {
-    font-size: 1rem;
-    color: #333;
+/* Review Section Styles */
+.reviewInputContainer {
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 100px;
+    z-index: 5;
 }
 
-.rating {
-    font-size: 1.2rem;
-    color: #5e8777;
-}
-
-.navbar {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-.navbar button {
-    background-color: #5e8777;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    margin: 0 10px;
-    font-size: 1.1rem;
-    border-radius: 5px;
-}
-
-.navbar button:hover {
-    background-color: #4a7056;
-}
-
-.navbar .activeTab {
-    background-color: #4a7056;
-}
-
-.details,
-.reviewsSection {
-    margin-top: 20px;
-}
-
-.menuSection,
-.reviewsSection {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.description h2,
-.menu h2 {
-    color: #5e8777;
-}
-
-.reviews {
-    margin-top: 20px;
-}
-
-.review {
-    background-color: #fff;
-    padding: 15px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-.addReview {
-    margin-top: 20px;
-}
-
-.addReview textarea {
+.reviewInput {
+    background: #f8f9fa;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    padding: 16px;
     width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    font-family: inherit;
     resize: none;
+    transition: all 0.3s ease;
 }
 
-.addReview button {
-    background-color: #5e8777;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
+.reviewInput:focus {
+    border-color: #5e8777;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(94, 135, 119, 0.1);
 }
 
-.addReview button:hover {
-    background-color: #4a7056;
+.submitButton {
+    background: linear-gradient(135deg, #2d3436 0%, #5e8777 100%) !important;
+    color: white !important;
+    padding: 12px 32px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    transition: transform 0.3s ease !important;
+}
+
+.submitButton:hover {
+    transform: translateY(-2px) !important;
+}
+
+/* Review Categories */
+.reviewCategories {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.ratingCategory {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.categoryTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* Review Cards */
+.reviewCard {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border-left: 4px solid;
+    transition: transform 0.3s ease;
+}
+
+.reviewCard[data-rating="high"] {
+    border-left-color: #4caf50;
+}
+
+.reviewCard[data-rating="medium"] {
+    border-left-color: #ffc107;
+}
+
+.reviewCard[data-rating="low"] {
+    border-left-color: #ff5252;
+}
+
+.reviewCard:hover {
+    transform: translateX(8px);
+}
+
+.reviewHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.reviewContent {
+    color: #4a4a4a;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        height: 35vh;
+        width: 96%;
+        margin: 16px auto;
+    }
+
+    .restaurantInfo {
+        margin: -40px 4% 0;
+        padding: 24px;
+    }
+
+    .reviewInputContainer {
+        padding: 20px;
+        position: relative;
+        top: 0;
+    }
+
+    .categoryTitle {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        height: 30vh;
+    }
+
+    .restaurantInfo {
+        padding: 20px;
+    }
+
+    .submitButton {
+        width: 100%;
+    }
 }
