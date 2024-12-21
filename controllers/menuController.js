@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid"; // Import uuid to generate unique ids
 import menuModel from "../models/menuModel.js"; // Import the menu model
 import restaurantModel from "../models/restaurantModel.js"; // Import the restaurant model to validate restaurant existence
+import { response } from "express";
 
 //This is mood key mapping
 const moodKeywordMapping = {
@@ -261,20 +262,34 @@ export const deleteDish = async (req, res) => {
 };
 
 // This function will fetch all dishes associated with a specific mood tag.
+
 export const getDishesByMood = async (req, res) => {
     try {
         const { mood } = req.params; // Mood tag sent from the frontend
 
         // Find all menus that have dishes with the specified mood tag
-        const menus = await menuModel.find({
-            "dishes.moodTags": mood,
-        });
+        const menus = await menuModel
+            .find({
+                "dishes.moodTags": mood,
+            })
+            .populate("restaurantId"); // Populate restaurantId to include restaurant details
 
-        // Collect all dishes matching the mood
-        const dishes = menus.flatMap((menu) =>
-            menu.dishes.filter((dish) => dish.moodTags.includes(mood))
-        );
+        // Collect all dishes matching the mood and attach restaurantId to each dish
+        const dishes = menus.reduce((acc, menu) => {
+            const matchingDishes = menu.dishes.filter((dish) =>
+                dish.moodTags.includes(mood)
+            );
 
+            // Add restaurantId to each dish
+            matchingDishes.forEach((dish) => {
+                acc.push({
+                    ...dish.toObject(),
+                    restaurantId: menu.restaurantId,
+                }); // Convert dish to plain object and add restaurantId
+            });
+            return acc;
+        }, []);
+        console.log(dishes[0].restaurantId._id);
         if (dishes.length === 0) {
             return res.status(404).json({
                 success: false,
@@ -285,7 +300,7 @@ export const getDishesByMood = async (req, res) => {
         res.status(200).json({
             success: true,
             mood: mood,
-            dishes: dishes,
+            dishes: dishes, // Send the dishes with restaurantId included
         });
     } catch (error) {
         console.error(error);
@@ -293,6 +308,21 @@ export const getDishesByMood = async (req, res) => {
             success: false,
             message: "Error fetching dishes by mood",
             error: error.message,
+        });
+    }
+};
+
+export const getMenus = async (req, res) => {
+    try {
+        const menus = await menuModel.find();
+        response.json({
+            success: true,
+            data: menus,
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
         });
     }
 };

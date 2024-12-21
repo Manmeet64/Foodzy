@@ -8,6 +8,7 @@ const menuTypeDefs = gql`
         price: Float!
         imageUrl: String
         cuisine: String!
+        moodTags: [String]!
         isPopular: Boolean
         ratings: Ratings
     }

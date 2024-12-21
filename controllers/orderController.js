@@ -262,11 +262,13 @@ export const getPendingOrdersWithRestaurantNames = async (req, res) => {
 // Get all orders by a specific user
 export const getOrdersByUser = async (req, res) => {
     try {
-        const { userId } = req.params;
-
+        const firebaseId = req.firebaseId;
+        console.log("Inside fetching orders function: ", firebaseId);
         // Find all orders for the user
-        const orders = await orderModel.find({ userId });
-
+        const orders = await orderModel.find({
+            userId: firebaseId,
+        });
+        console.log(orders);
         if (!orders || orders.length === 0) {
             return res.status(404).json({
                 success: false,
@@ -465,16 +467,16 @@ export const cancelOrder = async (req, res) => {
 };
 
 import Stripe from "stripe";
+import userModel from "../models/userModel.js";
 
 const stripe = new Stripe("sk_test_tR3PYbcVNZZ796tH88S4VQ2u"); // Replace with your Stripe secret key
-
-import userModel from "../models/userModel.js";
 
 export const createCheckoutSession = async (req, res) => {
     const { orderId } = req.params;
     const items = req.body.items;
     const deliveryCharge = req.body.deliveryCharge;
     const restaurantId = req.body.restaurantId;
+    const finalTotal = req.body.finalTotal;
 
     try {
         // Fetch the user details from the database using the firebaseId from the request
@@ -483,6 +485,20 @@ export const createCheckoutSession = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
+
+        // Check if the order with the given orderId already exists
+        const existingOrder = await orderModel.findOne({ orderId });
+
+        if (!existingOrder) {
+            return res.status(404).json({ error: "Order not found" });
+        }
+
+        // Update the total amount of the existing order
+        const updatedOrder = await orderModel.findOneAndUpdate(
+            { orderId },
+            { totalAmount: finalTotal },
+            { new: true } // This ensures the updated order is returned
+        );
 
         // Extract user details
         const customerName = `${user.name.firstName} ${user.name.lastName}`;
@@ -553,36 +569,6 @@ export const confirmOrder = async (req, res) => {
 
         // Update the status of the order to 'confirmed'
         order.status = "confirmed"; // Assuming you have a 'status' field in your order model
-
-        // Save the updated order
-        await order.save();
-
-        // Send a success response with the updated order
-        res.status(200).json({
-            message: "Order confirmed successfully",
-            order,
-        });
-    } catch (error) {
-        console.error("Error confirming order:", error);
-        res.status(500).json({ error: "Failed to confirm order" });
-    }
-};
-
-export const changeStatusOrder = async (req, res) => {
-    const { orderId } = req.params; // Extract orderId from params
-    const { status } = req.body;
-
-    try {
-        // Find the order by the orderId field
-        const order = await orderModel.findOne({ orderId: orderId });
-
-        if (!order) {
-            // If the order is not found, return a 404 error
-            return res.status(404).json({ error: "Order not found" });
-        }
-
-        // Update the status of the order to 'confirmed'
-        order.status = status; // Assuming you have a 'status' field in your order model
 
         // Save the updated order
         await order.save();

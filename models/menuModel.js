@@ -34,6 +34,10 @@ const menuSchema = mongoose.Schema({
                 type: String, // E.g., "Indian", "Italian"
                 required: true,
             },
+            moodTags: {
+                type: [String],
+                required: true,
+            },
             ratings: {
                 average: {
                     type: Number,

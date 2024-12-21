@@ -54,6 +54,6 @@ const restaurantSchema = mongoose.Schema({
     ],
 });
 
-const restaurantModel = mongoose.model("Restaurant", restaurantSchema);
+const restaurantModel = mongoose.model("restaurants", restaurantSchema);
 
 export default restaurantModel;

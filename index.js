@@ -42,11 +42,11 @@ app.use("/notification", notificationRouter);
 // Other routes and middlewares
 app.use("/delivery", deliveryRouter);
 app.use("/event", eventRouter);
+app.use("/menus", menuRouter);
 app.use(authMiddleware); // Uncomment this line to add the authentication middleware globally
 app.use("/auth", authRouter);
 app.use("/admin", restaurantRouter);
 app.use("/user", userRouter);
-app.use("/menus", menuRouter);
 app.use("/cuisines", cuisineRouter);
 app.use("/reviews", reviewRouter);
 app.use("/orders", orderRouter);
